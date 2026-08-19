@@ -1,0 +1,4 @@
+Array S: 1 4 45 6 10 8 12 
+Target T = 22, k = 3
+
+Found 3 elements that sum to 22: 4 6 12 
