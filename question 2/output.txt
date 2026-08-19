@@ -1,0 +1,5 @@
+Set 1 (S1): 10 3 5 2 8 
+Set 2 (S2): 4 15 1 7 9 
+Target x: 12
+
+Pair found: (3 from S1) + (9 from S2) = 12
