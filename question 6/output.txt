@@ -1,0 +1,8 @@
+Intervals:
+Interval 1: [10, 40]
+Interval 2: [20, 60]
+Interval 3: [50, 90]
+Interval 4: [15, 70]
+
+Point in maximum number of intervals: p = 20
+Number of intervals containing p: 3
