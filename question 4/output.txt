@@ -1,0 +1,9 @@
+Person Logs (Entry, Exit):
+Person 1: Entry = 1, Exit = 4
+Person 2: Entry = 2, Exit = 5
+Person 3: Entry = 9, Exit = 12
+Person 4: Entry = 5, Exit = 10
+Person 5: Entry = 8, Exit = 11
+
+Maximum number of people present simultaneously: 3
+Time when peak attendance was reached: 9
