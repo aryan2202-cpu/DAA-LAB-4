@@ -1,0 +1,14 @@
+Input (sorted by number):
+(1, Yellow) (2, Red) (4, Blue) (5, Red) (7, Yellow) (9, Blue) (10, Red) (12, Yellow) (13, Blue) (15, Red) (18, Yellow) (20, Blue) 
+
+Output (grouped by colour, numbers stay sorted within colour):
+(2, Red) (5, Red) (10, Red) (15, Red) (4, Blue) (9, Blue) (13, Blue) (20, Blue) (1, Yellow) (7, Yellow) (12, Yellow) (18, Yellow) 
+
+Validation: PASSED
+
+--- Stress test with random input (n = 20) ---
+Input:
+(2, Red) (4, Red) (7, Blue) (9, Red) (10, Yellow) (15, Yellow) (18, Red) (20, Yellow) (23, Red) (27, Red) (30, Red) (35, Red) (38, Yellow) (43, Blue) (45, Yellow) (49, Yellow) (51, Blue) (52, Blue) (57, Blue) (59, Red) 
+Output:
+(2, Red) (4, Red) (9, Red) (18, Red) (23, Red) (27, Red) (30, Red) (35, Red) (59, Red) (7, Blue) (43, Blue) (51, Blue) (52, Blue) (57, Blue) (10, Yellow) (15, Yellow) (20, Yellow) (38, Yellow) (45, Yellow) (49, Yellow) 
+Validation: PASSED
