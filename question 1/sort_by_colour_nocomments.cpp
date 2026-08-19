@@ -1,99 +1,99 @@
-#include <bits/stdc++.h>
-using namespace std;
+#include <stdio.h>
+#include <stdlib.h>
 
-enum Colour { RED = 0, BLUE = 1, YELLOW = 2 };
+typedef enum { RED = 0, BLUE = 1, YELLOW = 2 } Colour;
 
-struct Item {
+typedef struct {
     int number;
     Colour colour;
-};
+} Item;
 
 const char* colourName(Colour c) {
-    switch (c) {
-        case RED: return "Red";
-        case BLUE: return "Blue";
-        case YELLOW: return "Yellow";
-    }
-    return "?";
+    if (c == RED) return "Red";
+    if (c == BLUE) return "Blue";
+    return "Yellow";
 }
 
-vector<Item> sortByColour(const vector<Item>& items) {
-    int n = items.size();
-
+void sortByColour(Item items[], int n, Item result[]) {
     int count[3] = {0, 0, 0};
-    for (const auto& it : items) count[it.colour]++;
+    for (int i = 0; i < n; i++) count[items[i].colour]++;
 
     int offset[3];
     offset[RED] = 0;
     offset[BLUE] = count[RED];
     offset[YELLOW] = count[RED] + count[BLUE];
 
-    vector<Item> result(n);
-    for (const auto& it : items) {
-        result[offset[it.colour]] = it;
-        offset[it.colour]++;
+    for (int i = 0; i < n; i++) {
+        result[offset[items[i].colour]] = items[i];
+        offset[items[i].colour]++;
     }
-
-    return result;
 }
 
-bool validate(const vector<Item>& out) {
-    for (size_t i = 1; i < out.size(); i++) {
+int validate(Item out[], int n) {
+    for (int i = 1; i < n; i++) {
         if (out[i].colour < out[i-1].colour) {
-            cout << "FAIL: colour order broken at index " << i << "\n";
-            return false;
+            printf("FAIL: colour order broken at index %d\n", i);
+            return 0;
         }
     }
-    map<Colour,int> lastNum;
-    for (const auto& it : out) {
-        if (lastNum.count(it.colour) && it.number < lastNum[it.colour]) {
-            cout << "FAIL: numbers not sorted within colour " << colourName(it.colour) << "\n";
-            return false;
+    int lastNum[3];
+    int seen[3] = {0, 0, 0};
+    for (int i = 0; i < n; i++) {
+        Colour c = out[i].colour;
+        if (seen[c] && out[i].number < lastNum[c]) {
+            printf("FAIL: numbers not sorted within colour %s\n", colourName(c));
+            return 0;
         }
-        lastNum[it.colour] = it.number;
+        lastNum[c] = out[i].number;
+        seen[c] = 1;
     }
-    return true;
+    return 1;
 }
 
-void printItems(const vector<Item>& items) {
-    for (const auto& it : items)
-        cout << "(" << it.number << ", " << colourName(it.colour) << ") ";
-    cout << "\n";
+void printItems(Item items[], int n) {
+    for (int i = 0; i < n; i++)
+        printf("(%d, %s) ", items[i].number, colourName(items[i].colour));
+    printf("\n");
 }
 
 int main() {
-    vector<Item> input = {
+    Item input[] = {
         {1, YELLOW}, {2, RED}, {4, BLUE}, {5, RED}, {7, YELLOW},
         {9, BLUE}, {10, RED}, {12, YELLOW}, {13, BLUE}, {15, RED},
         {18, YELLOW}, {20, BLUE}
     };
+    int n = sizeof(input) / sizeof(input[0]);
+    Item output[n];
 
-    cout << "Input (sorted by number):\n";
-    printItems(input);
+    printf("Input (sorted by number):\n");
+    printItems(input, n);
 
-    vector<Item> output = sortByColour(input);
+    sortByColour(input, n, output);
 
-    cout << "\nOutput (grouped by colour, numbers stay sorted within colour):\n";
-    printItems(output);
+    printf("\nOutput (grouped by colour, numbers stay sorted within colour):\n");
+    printItems(output, n);
 
-    cout << "\nValidation: " << (validate(output) ? "PASSED" : "FAILED") << "\n";
+    printf("\nValidation: %s\n", validate(output, n) ? "PASSED" : "FAILED");
 
-    cout << "\n--- Stress test with random input (n = 20) ---\n";
+    printf("\n--- Stress test with random input (n = 20) ---\n");
     srand(42);
-    vector<Item> randInput;
+    int m = 20;
+    Item randInput[20];
     int num = 0;
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < m; i++) {
         num += rand() % 5 + 1;
-        Colour c = static_cast<Colour>(rand() % 3);
-        randInput.push_back({num, c});
+        Colour c = (Colour)(rand() % 3);
+        randInput[i].number = num;
+        randInput[i].colour = c;
     }
-    cout << "Input:\n";
-    printItems(randInput);
+    printf("Input:\n");
+    printItems(randInput, m);
 
-    vector<Item> randOutput = sortByColour(randInput);
-    cout << "Output:\n";
-    printItems(randOutput);
-    cout << "Validation: " << (validate(randOutput) ? "PASSED" : "FAILED") << "\n";
+    Item randOutput[20];
+    sortByColour(randInput, m, randOutput);
+    printf("Output:\n");
+    printItems(randOutput, m);
+    printf("Validation: %s\n", validate(randOutput, m) ? "PASSED" : "FAILED");
 
     return 0;
 }
